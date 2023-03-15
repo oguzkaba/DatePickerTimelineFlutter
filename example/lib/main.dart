@@ -26,9 +26,9 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   DatePickerController _controller = DatePickerController();
+  ScrollController _scrollController = ScrollController();
 
   DateTime _selectedValue = DateTime.now();
-
 
   @override
   void initState() {
@@ -37,13 +37,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    double a = 300;
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.replay),
-        onPressed: () {
-          _controller.animateToSelection();
-        },
-      ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.replay),
+          onPressed: () {
+            _scrollController.animateTo(a,
+                duration: Duration(milliseconds: 500), curve: Curves.linear);
+            a += 300;
+          },
+        ),
         appBar: AppBar(
           title: Text(widget.title!),
         ),
@@ -64,6 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Container(
                 child: DatePicker(
                   DateTime.now(),
+                  scrollController: _scrollController,
                   width: 60,
                   height: 80,
                   controller: _controller,
